@@ -2,7 +2,7 @@
 import { User } from '@/lib/types';
 import { error } from 'console';
 import {create} from 'zustand';
-import { getWithAuth, postWithAuth, postWithOutAuth } from '../service/httpService';
+import { getWithAuth, postWithAuth, postWithOutAuth, putWithAuth } from '../service/httpService';
 
 interface AuthState{
     user: User | null;
@@ -60,6 +60,7 @@ export const userAuthStore=create<AuthState>()(
         }
 
        },
+
         LoginPatient :async(email,password)=>{
         set({loading:true,error:null})
 
@@ -77,7 +78,7 @@ export const userAuthStore=create<AuthState>()(
 
        },
 
-          signupDoctor:async(data)=>{
+        signupDoctor:async(data)=>{
 
         set({loading:true, error:null})
 
@@ -111,7 +112,7 @@ export const userAuthStore=create<AuthState>()(
             set({loading:false})
         }
 
-       }
+       },
 
 
        fetchProfile:async():Promise<User |null>=>{
@@ -132,8 +133,39 @@ export const userAuthStore=create<AuthState>()(
             set({loading:false})
         }
         
-       }
+       },
+
+       updateProfile:async(data)=>{
+        set({loading:true, error:null})
+
+        try {
+            const {user}=get()
+            if(!user) throw new Error("No user found")
+                const endpoint=user.type==='doctor'? "/doctor/onboarding/update":"/patient/onboarding/update";
+                const response=await putWithAuth(endpoint,data);
+                set({user:{...user,...response.data}})
+                return response.data
+        } catch (error:any) {
+            set({error:error.message})
+            throw error
+            
+        }finally{
+            set({loading:false})
+        }
+    },
 
 
-    }))
+    }),
+    {
+         name:"auth-storage",
+        partialize:(state)=>({
+        user:state.user,
+        token:state.token,
+        isAuthenticated:state.isAuthenticated
+
+    })
+    }
+)
+)
+
 
