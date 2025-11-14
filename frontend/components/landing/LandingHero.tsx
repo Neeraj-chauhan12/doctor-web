@@ -48,7 +48,7 @@ const LandingHero = () => {
               </Button>
             </Link>
 
-            <Link href={"/signup/patient"}>
+            <Link href={"/login/doctor"}>
               <Button
                 variant={"ghost"}
                 className="px-14 rounded-3xl border-2 border-blue-400"
