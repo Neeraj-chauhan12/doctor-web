@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { userAuthStore } from "../Store/authStore";
 import { useRouter } from "next/navigation";
 import { Card, CardContent } from "../ui/card";
 import { Input } from "../ui/input";
@@ -9,6 +8,8 @@ import { Eye, EyeOff } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import Link from "next/link";
+import { userAuthStore } from "../Store/authStore";
+
 
 interface AuthFormProps {
   type: "login" | "signup";
@@ -25,14 +26,7 @@ const AuthForm = ({ type, role }: AuthFormProps) => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
-  const {
-    loginDoctor,
-    loginPatient,
-    signupDoctor,
-    signupPatient,
-    loading,
-    error,
-  } = userAuthStore();
+  const {loginDoctor,loginPatient,signupDoctor,signupPatient, loading,error}=userAuthStore();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

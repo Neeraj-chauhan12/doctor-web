@@ -1,7 +1,8 @@
+"use client"
 import { User } from "@/lib/types";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import {
+import {persist } from "zustand/middleware"
+ import {
   getWithAuth,
   postWithAuth,
   postWithOutAuth,
@@ -25,10 +26,12 @@ interface AuthState {
   signupPatient: (data: any) => Promise<void>;
   fetchProfile: () => Promise<User | null>;
   updateProfile: (data: any) => Promise<void>;
+  
 }
 
-export const userAuthStore = create<AuthState>()(
-  persist((set, get) => ({
+
+export const userAuthStore = create(create<AuthState>()(  
+persist((set,get) => ({
       user: null,
       token: null,
       loading: false,
@@ -50,7 +53,6 @@ export const userAuthStore = create<AuthState>()(
           error: null,
         });
       },
-
       loginDoctor: async (email: string, password: string) => {
         set({ loading: true, error: null });
 
@@ -85,7 +87,7 @@ export const userAuthStore = create<AuthState>()(
         }
       },
 
-      signupDoctor: async (data: Partial<User>) => {
+      signupDoctor: async (data) => {
         set({ loading: true, error: null });
 
         try {
@@ -99,7 +101,7 @@ export const userAuthStore = create<AuthState>()(
         }
       },
 
-      signupPatient: async (data: Partial<User>) => {
+      signupPatient: async (data) => {
         set({ loading: true, error: null });
 
         try {
@@ -132,7 +134,7 @@ export const userAuthStore = create<AuthState>()(
         }
       },
 
-      updateProfile: async (data: Partial<User>) => {
+      updateProfile: async (data) => {
         set({ loading: true, error: null });
 
         try {
@@ -160,6 +162,8 @@ export const userAuthStore = create<AuthState>()(
         token: state.token,
         isAuthenticated: state.isAuthenticated,
       }),
-    }
+      }
   )
-);
+)
+)
+
