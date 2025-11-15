@@ -10,5 +10,5 @@ export const metadata = {
 
 
 export default function PatientSignupPage(){
- return <AuthForm type='signup' role='patient' />
+ //return <AuthForm type='signup' role='patient' />
 }
